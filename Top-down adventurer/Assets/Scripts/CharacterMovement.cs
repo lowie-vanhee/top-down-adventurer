@@ -24,7 +24,6 @@ public class CharacterMovement : MonoBehaviour
             if (hit.transform.tag == "Ground")
                 transform.LookAt(new Vector3(hit.point.x, heightToLook, hit.point.z));
         }
-        //transform.LookAt(mousePos);
     }
 
     //Move

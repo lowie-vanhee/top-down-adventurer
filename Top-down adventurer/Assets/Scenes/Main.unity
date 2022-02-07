@@ -425,6 +425,7 @@ GameObject:
   - component: {fileID: 971615301}
   - component: {fileID: 971615305}
   - component: {fileID: 971615306}
+  - component: {fileID: 971615307}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -539,6 +540,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   rb: {fileID: 971615305}
-  cam: {fileID: 0}
   heightToLook: 1
-  radiusWhereNotAllowedToLook: 0
+--- !u!114 &971615307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971615300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ed4abc80ec4d449b2fa989a04622c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 7234515530131634647, guid: 9d2860a3313e47b41a607fa3befa0762, type: 3}
