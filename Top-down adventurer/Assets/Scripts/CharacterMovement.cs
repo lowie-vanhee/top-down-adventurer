@@ -7,6 +7,7 @@ public class CharacterMovement : MonoBehaviour
 
     public float moveSpeed = 5f;
     public Rigidbody rb;
+    public float heightToLook = 1f;
 
     Vector3 movement;
 
@@ -15,6 +16,15 @@ public class CharacterMovement : MonoBehaviour
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.z = Input.GetAxisRaw("Vertical");
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100))
+        {
+            if (hit.transform.tag == "Ground")
+                transform.LookAt(new Vector3(hit.point.x, heightToLook, hit.point.z));
+        }
+        //transform.LookAt(mousePos);
     }
 
     //Move
