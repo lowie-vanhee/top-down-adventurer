@@ -15,7 +15,7 @@ public class Special : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ground"))
+        if (other.CompareTag("Obstacle"))
             Destroy(gameObject);
     }
 }

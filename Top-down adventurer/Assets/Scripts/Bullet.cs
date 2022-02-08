@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Ground"))
+        if(other.CompareTag("Obstacle") || other.CompareTag("Enemy"))
             Destroy(gameObject);
     }
 }
