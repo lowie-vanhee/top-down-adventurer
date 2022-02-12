@@ -26,7 +26,7 @@ public class CharacterHealthAndStamina : MonoBehaviour
     {
         if(Input.GetButtonDown("Jump"))
         {
-            takeDamage(10);
+            removeHealth(10);
         }
         if (Input.GetButtonDown("Cancel"))
         {
@@ -34,7 +34,7 @@ public class CharacterHealthAndStamina : MonoBehaviour
         }
     }
 
-    public void takeDamage(int damage)
+    public void removeHealth(int damage)
     {
         currentHealth -= damage;
         if (currentHealth < 0)
