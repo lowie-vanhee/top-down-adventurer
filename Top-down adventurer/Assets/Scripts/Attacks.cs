@@ -16,6 +16,12 @@ public class Attacks : MonoBehaviour
 
     public CharacterHealthAndStamina has;
 
+    public Transform meleeAttackPoint;
+    public float attackRange;
+    public LayerMask enemyLayers;
+    public int meleeDamage;
+    public float meleePower;
+
     int healcost;
     int specialcost;
 
@@ -98,6 +104,11 @@ public class Attacks : MonoBehaviour
         }
 
         //Hold down? Slower shooting
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            MeleeAttack();
+        }
     }
 
     void ShootSpecial()
@@ -107,6 +118,18 @@ public class Attacks : MonoBehaviour
     void Shoot()
     {
         Instantiate(bullet, transform.position, transform.rotation);
+    }
+
+    void MeleeAttack()
+    {
+        //melee anim
+        Collider[] hitEnemies = Physics.OverlapSphere(meleeAttackPoint.position, attackRange, enemyLayers);
+
+        foreach(Collider enemy in hitEnemies)
+        {
+            enemy.GetComponent<EnemyAI>().TakeDamage(meleeDamage);
+            enemy.GetComponent<Rigidbody>().AddForce(transform.forward * meleePower);
+        }
     }
 
     private void Start()
@@ -136,5 +159,13 @@ public class Attacks : MonoBehaviour
             has.addHealth(1);
             yield return new WaitForEndOfFrame();
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (meleeAttackPoint == null)
+            return;
+
+        Gizmos.DrawSphere(meleeAttackPoint.position, attackRange);
     }
 }

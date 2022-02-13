@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2973745642535315297}
   - component: {fileID: 2973745642535315296}
   - component: {fileID: 2973745642535315299}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Minion
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -166,8 +166,8 @@ MonoBehaviour:
   timeBetweenAttacks: 0.5
   meleeEnemy: 1
   projectile: {fileID: 7234515530131634647, guid: 432598891e4f8164496fa4101945572c, type: 3}
-  meleePower: 4
-  meleeDamage: 20
+  meleePower: 3
+  meleeDamage: 10
   sightRange: 15
   attackRange: 1.2
   playerInSightRange: 0

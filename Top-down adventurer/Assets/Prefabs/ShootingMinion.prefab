@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6041711255454591756}
   - component: {fileID: 6041711255454591757}
   - component: {fileID: 6041711255454591758}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ShootingMinion
   m_TagString: Enemy
   m_Icon: {fileID: 0}
