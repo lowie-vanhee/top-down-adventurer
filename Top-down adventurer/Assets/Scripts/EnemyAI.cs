@@ -16,11 +16,16 @@ public class EnemyAI : MonoBehaviour
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
+    public float patrolSpeed;
+    public float chaseSpeed;
 
     //Attacking
     public float timeBetweenAttacks;
     bool alreadyAttacked;
+    public bool meleeEnemy;
     public GameObject projectile;
+    public float meleePower;
+    public int meleeDamage;
 
     //States
     public float sightRange, attackRange;
@@ -45,6 +50,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Patroling()
     {
+        agent.speed = patrolSpeed;
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
@@ -70,6 +76,7 @@ public class EnemyAI : MonoBehaviour
 
     private void ChasePlayer()
     {
+        agent.speed = chaseSpeed;
         agent.SetDestination(player.position);
     }
 
@@ -83,7 +90,14 @@ public class EnemyAI : MonoBehaviour
         if (!alreadyAttacked)
         {
             ///Attack code here
-            Rigidbody rb = Instantiate(projectile, transform.position, transform.rotation).GetComponent<Rigidbody>();
+            if (!meleeEnemy)
+                Instantiate(projectile, transform.position, transform.rotation).GetComponent<Rigidbody>();
+            else
+            {
+                player.GetComponent<Rigidbody>().AddForce(transform.forward * meleePower, ForceMode.Impulse);
+                player.GetComponent<CharacterHealthAndStamina>().removeHealth(meleeDamage);
+            }
+
             //rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
             //rb.AddForce(transform.up * 8f, ForceMode.Impulse);
             ///End of attack code
