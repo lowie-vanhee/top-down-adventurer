@@ -9,20 +9,35 @@ public class CharacterMovement : MonoBehaviour
     public Rigidbody rb;
     public float heightToLook = 1f;
 
+    bool isActive = true;
+
     Vector3 movement;
+
+    public EscapeMenu escapemenu;
 
     //Input
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.z = Input.GetAxisRaw("Vertical");
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100))
+        if(isActive)
         {
-            if (hit.transform.tag == "Ground")
-                transform.LookAt(new Vector3(hit.point.x, heightToLook, hit.point.z));
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.z = Input.GetAxisRaw("Vertical");
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                if (hit.transform.tag == "Ground")
+                    transform.LookAt(new Vector3(hit.point.x, heightToLook, hit.point.z));
+            }
+        }
+
+        if (Input.GetButtonDown("Cancel"))
+        {
+            if(!escapemenu.IsActive())
+                escapemenu.SetActive(true);
+            else
+                escapemenu.SetActive(false);
         }
     }
 
@@ -30,5 +45,10 @@ public class CharacterMovement : MonoBehaviour
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    public void SetActive(bool boolean)
+    {
+        isActive = boolean;
     }
 }

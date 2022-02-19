@@ -12,6 +12,7 @@ public class CharacterHealthAndStamina : MonoBehaviour
 
     public HealthBar healthBar;
     public StaminaBar staminaBar;
+    public DeathMenu deathMenu;
 
     private void Start()
     {
@@ -24,14 +25,8 @@ public class CharacterHealthAndStamina : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetButtonDown("Jump"))
-        {
-            removeHealth(10);
-        }
-        if (Input.GetButtonDown("Cancel"))
-        {
-            addStamina(20);
-        }
+        if (currentHealth <= 0)
+            deathMenu.SetActive(true);
     }
 
     public void removeHealth(int damage)

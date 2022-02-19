@@ -25,89 +25,94 @@ public class Attacks : MonoBehaviour
     int healcost;
     int specialcost;
 
+    bool isActive = true;
+
     //Input
     void Update()
     {
-        if(Input.GetButtonDown("Ability1"))
+        if (isActive)
         {
-            //check if player has 50 stamina and doesnt have full health
-            if (has.getStamina() >= healcost && has.currentHealth < has.maxHealth)
+            if (Input.GetButtonDown("Ability1"))
             {
-                if(isUsingSpecial)
+                //check if player has 50 stamina and doesnt have full health
+                if (has.getStamina() >= healcost && has.currentHealth < has.maxHealth)
                 {
+                    if (isUsingSpecial)
+                    {
+                        isUsingSpecial = false;
+                        eNotifier.SetActive(false);
+                    }
+
+
+                    if (isUsingHeal)
+                    {
+                        isUsingHeal = false;
+                        aNotifier.SetActive(false);
+                    }
+                    else
+                    {
+                        isUsingHeal = true;
+                        aNotifier.SetActive(true);
+                    }
+                }
+                else
+                    Debug.Log("stamina too low for heal");
+            }
+
+            if (Input.GetButtonDown("Ability2"))
+            {
+                //check if player has 100 stamina
+                if (has.getStamina() == specialcost)
+                {
+                    if (isUsingHeal)
+                    {
+                        isUsingHeal = false;
+                        aNotifier.SetActive(false);
+                    }
+
+
+                    if (isUsingSpecial)
+                    {
+                        isUsingSpecial = false;
+                        eNotifier.SetActive(false);
+                    }
+                    else
+                    {
+                        isUsingSpecial = true;
+                        eNotifier.SetActive(true);
+                    }
+                }
+                else
+                    Debug.Log("stamina too low for special");
+            }
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                if (!isUsingSpecial && !isUsingHeal)
+                    Shoot();
+                else if (!isUsingSpecial && isUsingHeal)
+                {
+                    has.removeStamina(healcost);
+                    isUsingHeal = false;
+                    aNotifier.SetActive(false);
+                    StartCoroutine(Heal());
+                }
+                else if (isUsingSpecial && !isUsingHeal)
+                {
+                    ShootSpecial();
+                    has.removeStamina(specialcost);
                     isUsingSpecial = false;
                     eNotifier.SetActive(false);
                 }
 
-
-                if (isUsingHeal)
-                {
-                    isUsingHeal = false;
-                    aNotifier.SetActive(false);
-                }
-                else
-                {
-                    isUsingHeal = true;
-                    aNotifier.SetActive(true);
-                }
             }
-            else
-                Debug.Log("stamina too low for heal");
-        }
 
-        if (Input.GetButtonDown("Ability2"))
-        {
-            //check if player has 100 stamina
-            if (has.getStamina() == specialcost)
+            //Hold down? Slower shooting
+
+            if (Input.GetButtonDown("Fire2"))
             {
-                if (isUsingHeal)
-                {
-                    isUsingHeal = false;
-                    aNotifier.SetActive(false);
-                }
-
-
-                if (isUsingSpecial)
-                {
-                    isUsingSpecial = false;
-                    eNotifier.SetActive(false);
-                }
-                else
-                {
-                    isUsingSpecial = true;
-                    eNotifier.SetActive(true);
-                }
+                MeleeAttack();
             }
-            else
-                Debug.Log("stamina too low for special");
-        }
-
-        if (Input.GetButtonDown("Fire1"))
-        {
-            if(!isUsingSpecial && !isUsingHeal)
-                Shoot();
-            else if(!isUsingSpecial && isUsingHeal)
-            {
-                has.removeStamina(healcost);
-                isUsingHeal = false;
-                aNotifier.SetActive(false);
-                StartCoroutine(Heal());
-            }
-            else if(isUsingSpecial && !isUsingHeal)
-            {
-                ShootSpecial();
-                has.removeStamina(specialcost);
-                isUsingSpecial = false;
-                eNotifier.SetActive(false);
-            }
-
-        }
-
-        //Hold down? Slower shooting
-
-        if (Input.GetButtonDown("Fire2"))
-        {
-            MeleeAttack();
         }
     }
 
@@ -167,5 +172,10 @@ public class Attacks : MonoBehaviour
             return;
 
         Gizmos.DrawSphere(meleeAttackPoint.position, attackRange);
+    }
+
+    public void SetActive(bool boolean)
+    {
+        isActive = boolean;
     }
 }
