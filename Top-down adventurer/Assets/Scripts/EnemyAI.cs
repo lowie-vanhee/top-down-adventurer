@@ -87,6 +87,9 @@ public class EnemyAI : MonoBehaviour
     {
         agent.SetDestination(transform.position);
 
+        if (!meleeEnemy)
+            transform.LookAt(player);
+
         if (!alreadyAttacked)
         {
             ///Attack code here

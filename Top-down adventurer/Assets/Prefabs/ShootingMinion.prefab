@@ -183,7 +183,7 @@ MonoBehaviour:
   projectile: {fileID: 7234515530131634647, guid: 432598891e4f8164496fa4101945572c, type: 3}
   meleePower: 0
   meleeDamage: 0
-  sightRange: 22
-  attackRange: 19
+  sightRange: 20
+  attackRange: 17
   playerInSightRange: 0
   playerInAttackRange: 0
