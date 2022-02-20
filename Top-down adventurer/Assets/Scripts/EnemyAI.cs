@@ -40,8 +40,11 @@ public class EnemyAI : MonoBehaviour
     private void Update()
     {
         //Check for sight and attack range
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        Collider[] hitplayersight  = Physics.OverlapSphere(transform.position, sightRange, whatIsPlayer);
+        Collider[] hitplayerattack = Physics.OverlapSphere(transform.position, attackRange, whatIsPlayer);
+
+        playerInSightRange = hitplayersight.Length > 0;
+        playerInAttackRange = hitplayerattack.Length > 0;
 
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
@@ -82,10 +85,7 @@ public class EnemyAI : MonoBehaviour
 
     private void AttackPlayer()
     {
-        //Make sure enemy doesn't move
         agent.SetDestination(transform.position);
-
-        transform.LookAt(player);
 
         if (!alreadyAttacked)
         {
@@ -97,9 +97,6 @@ public class EnemyAI : MonoBehaviour
                 player.GetComponent<Rigidbody>().AddForce(transform.forward * meleePower, ForceMode.Impulse);
                 player.GetComponent<CharacterHealthAndStamina>().removeHealth(meleeDamage);
             }
-
-            //rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            //rb.AddForce(transform.up * 8f, ForceMode.Impulse);
             ///End of attack code
 
             alreadyAttacked = true;

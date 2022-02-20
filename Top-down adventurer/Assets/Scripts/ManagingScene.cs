@@ -15,4 +15,9 @@ public class ManagingScene : MonoBehaviour
     {
         SceneManager.LoadScene("Main");
     }
+
+    public void Retry()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }

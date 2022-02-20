@@ -171,7 +171,8 @@ public class Attacks : MonoBehaviour
         if (meleeAttackPoint == null)
             return;
 
-        Gizmos.DrawSphere(meleeAttackPoint.position, attackRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(meleeAttackPoint.position, attackRange);
     }
 
     public void SetActive(bool boolean)
