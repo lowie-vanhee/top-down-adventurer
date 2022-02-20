@@ -2325,6 +2325,7 @@ MonoBehaviour:
     m_Bits: 256
   meleeDamage: 20
   meleePower: 3
+  cooldownTime: 0.32
 --- !u!114 &971615308
 MonoBehaviour:
   m_ObjectHideFlags: 0

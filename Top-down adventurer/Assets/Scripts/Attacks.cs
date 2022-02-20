@@ -27,6 +27,10 @@ public class Attacks : MonoBehaviour
 
     bool isActive = true;
 
+    bool canShoot = true;
+    public float cooldownTime;
+
+
     //Input
     void Update()
     {
@@ -122,7 +126,18 @@ public class Attacks : MonoBehaviour
     }
     void Shoot()
     {
+        if (canShoot)
+        {
+            StartCoroutine(shoot());
+        }
+    }
+
+    public IEnumerator shoot()
+    {
         Instantiate(bullet, transform.position, transform.rotation);
+        canShoot = false;
+        yield return new WaitForSeconds(cooldownTime);
+        canShoot = true;
     }
 
     void MeleeAttack()
