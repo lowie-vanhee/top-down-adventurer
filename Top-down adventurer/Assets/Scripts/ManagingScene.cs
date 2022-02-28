@@ -25,4 +25,9 @@ public class ManagingScene : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void GoToOptionsMenu()
+    {
+        SceneManager.LoadScene("OptionsMenu");
+    }
 }
