@@ -7,6 +7,7 @@ public class EscapeMenu : MonoBehaviour
     CharacterMovement cm;
     Attacks att;
     public GameObject character;
+    public GameObject optionsmenu;
 
     public void SetActive(bool boolean)
     {
@@ -28,6 +29,7 @@ public class EscapeMenu : MonoBehaviour
     {
         cm = character.GetComponent<CharacterMovement>();
         att = character.GetComponent<Attacks>();
+        optionsmenu.SetActive(false);
         SetActive(false);
     }
 }

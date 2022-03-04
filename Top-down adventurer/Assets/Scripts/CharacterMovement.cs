@@ -14,6 +14,9 @@ public class CharacterMovement : MonoBehaviour
     Vector3 movement;
 
     public EscapeMenu escapemenu;
+    public GameObject optionsmenu;
+    public GameObject escmenu;
+    public SetUI setui;
 
     //Input
     void Update()
@@ -34,10 +37,16 @@ public class CharacterMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Cancel"))
         {
-            if(!escapemenu.IsActive())
+            if (!escapemenu.IsActive() && !optionsmenu.activeSelf)
                 escapemenu.SetActive(true);
-            else
+            else if (escapemenu.IsActive() && !optionsmenu.activeSelf)
                 escapemenu.SetActive(false);
+            else if (!escapemenu.IsActive() && optionsmenu.activeSelf)
+            {
+                optionsmenu.SetActive(false);
+                escmenu.SetActive(true);
+                setui.CheckBarPositions();
+            }
         }
     }
 
