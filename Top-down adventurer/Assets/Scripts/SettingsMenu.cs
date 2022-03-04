@@ -9,6 +9,8 @@ public class SettingsMenu : MonoBehaviour
     public AudioMixer audioMixer;
     public TMP_Dropdown resolutionDropdown;
 
+    public static int barsPos = 0;
+
     Resolution[] resolutions;
 
     private void Start()
@@ -51,5 +53,10 @@ public class SettingsMenu : MonoBehaviour
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
+    }
+
+    public void SetBars(int barsPos)
+    {
+        SettingsMenu.barsPos = barsPos;
     }
 }
