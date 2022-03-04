@@ -27,8 +27,8 @@ public class Attacks : MonoBehaviour
 
     bool isActive = true;
 
-    bool canShoot = true;
     public float cooldownTime;
+    private float lastFire = 0f;
 
 
     //Input
@@ -90,11 +90,17 @@ public class Attacks : MonoBehaviour
                     Debug.Log("stamina too low for special");
             }
 
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButton("Fire1"))
             {
                 if (!isUsingSpecial && !isUsingHeal)
-                    Shoot();
-                else if (!isUsingSpecial && isUsingHeal)
+                {
+                    if (Time.time > lastFire)
+                    {
+                        lastFire = Time.time + cooldownTime;
+                        Instantiate(bullet, transform.position, transform.rotation);
+                    }
+                }
+                    else if (!isUsingSpecial && isUsingHeal)
                 {
                     has.removeStamina(healcost);
                     isUsingHeal = false;
@@ -111,8 +117,6 @@ public class Attacks : MonoBehaviour
 
             }
 
-            //Hold down? Slower shooting
-
             if (Input.GetButtonDown("Fire2"))
             {
                 MeleeAttack();
@@ -123,21 +127,6 @@ public class Attacks : MonoBehaviour
     void ShootSpecial()
     {
         Instantiate(special, transform.position, transform.rotation);
-    }
-    void Shoot()
-    {
-        if (canShoot)
-        {
-            StartCoroutine(shoot());
-        }
-    }
-
-    public IEnumerator shoot()
-    {
-        Instantiate(bullet, transform.position, transform.rotation);
-        canShoot = false;
-        yield return new WaitForSeconds(cooldownTime);
-        canShoot = true;
     }
 
     void MeleeAttack()
