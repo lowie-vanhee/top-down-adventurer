@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,6 +22,7 @@ public class EnemyAI : MonoBehaviour
 
     //Attacking
     public float timeBetweenAttacks;
+    public float timeWhenHitsPlayer;
     bool alreadyAttacked;
     public bool meleeEnemy;
     public GameObject projectile;
@@ -30,6 +32,10 @@ public class EnemyAI : MonoBehaviour
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
+
+    public Animator anim;
+    public float deathAnimLength;
+    private bool isAlive = true;
 
     private void Awake()
     {
@@ -46,14 +52,18 @@ public class EnemyAI : MonoBehaviour
         playerInSightRange = hitplayersight.Length > 0;
         playerInAttackRange = hitplayerattack.Length > 0;
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInAttackRange && playerInSightRange) AttackPlayer();
+        if (isAlive)
+        {
+            if (!playerInSightRange && !playerInAttackRange) Patroling();
+            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+            if (playerInAttackRange && playerInSightRange) AttackPlayer();
+        }
     }
 
     private void Patroling()
     {
         agent.speed = patrolSpeed;
+        anim.SetFloat("Speed", agent.speed);
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
@@ -80,6 +90,7 @@ public class EnemyAI : MonoBehaviour
     private void ChasePlayer()
     {
         agent.speed = chaseSpeed;
+        anim.SetFloat("Speed", agent.speed);
         agent.SetDestination(player.position);
     }
 
@@ -93,12 +104,14 @@ public class EnemyAI : MonoBehaviour
         if (!alreadyAttacked)
         {
             ///Attack code here
+            anim.ResetTrigger("isAttacking");
+            anim.SetTrigger("isAttacking");
+
             if (!meleeEnemy)
                 Instantiate(projectile, transform.position, transform.rotation).GetComponent<Rigidbody>();
             else
             {
-                player.GetComponent<Rigidbody>().AddForce(transform.forward * meleePower, ForceMode.Impulse);
-                player.GetComponent<CharacterHealthAndStamina>().removeHealth(meleeDamage);
+                StartCoroutine(HitPlayer());
             }
             ///End of attack code
 
@@ -106,6 +119,15 @@ public class EnemyAI : MonoBehaviour
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
     }
+
+    IEnumerator HitPlayer()
+    {
+        yield return new WaitForSecondsRealtime(timeWhenHitsPlayer);
+
+        player.GetComponent<Rigidbody>().AddForce(transform.forward * meleePower, ForceMode.Impulse);
+        player.GetComponent<CharacterHealthAndStamina>().removeHealth(meleeDamage);
+    }
+    
     private void ResetAttack()
     {
         alreadyAttacked = false;
@@ -117,7 +139,9 @@ public class EnemyAI : MonoBehaviour
 
         if (health <= 0)
         {
-            Invoke(nameof(DestroyEnemy), 0f);
+            isAlive = false;
+            anim.SetTrigger("isDying");
+            Invoke(nameof(DestroyEnemy), deathAnimLength);
             player.GetComponent<CharacterHealthAndStamina>().addStamina(staminaGain);
         }
     }
