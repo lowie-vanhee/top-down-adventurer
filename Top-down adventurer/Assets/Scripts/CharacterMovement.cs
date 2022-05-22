@@ -6,6 +6,7 @@ public class CharacterMovement : MonoBehaviour
 {
 
     public float moveSpeed = 5f;
+    public float backwardsSpeed = 4f;
     public Rigidbody rb;
     public float heightToLook = 1f;
 
@@ -18,6 +19,8 @@ public class CharacterMovement : MonoBehaviour
     public GameObject escmenu;
     public SetUI setui;
 
+    public Animator anim;
+
     //Input
     void Update()
     {
@@ -28,10 +31,32 @@ public class CharacterMovement : MonoBehaviour
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
+            Vector3 lookAt = new Vector3(0,0,0);
             if (Physics.Raycast(ray, out hit, 100))
             {
                 if (hit.transform.tag == "Ground")
-                    transform.LookAt(new Vector3(hit.point.x, heightToLook, hit.point.z));
+                {
+                    lookAt = new Vector3(hit.point.x, heightToLook, hit.point.z);
+                    transform.LookAt(lookAt);
+                }
+            }
+
+            /// if the angle between the movement vector and the lookAt vector is in between 90 degrees and 270 => backwards walking
+            if(Vector3.Angle(movement, lookAt) > 90 && Vector3.Angle(movement, lookAt) < 270)
+            {
+                anim.SetBool("isWalkingForwards", false);
+                anim.SetBool("isWalkingBackwards", true);
+            }
+            else
+            {
+                anim.SetBool("isWalkingBackwards", false);
+                anim.SetBool("isWalkingForwards", true);
+            }
+            
+            if (movement.x == 0 && movement.z == 0)
+            {
+                anim.SetBool("isWalkingBackwards", false);
+                anim.SetBool("isWalkingForwards", false);
             }
         }
 
@@ -53,7 +78,10 @@ public class CharacterMovement : MonoBehaviour
     //Move
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        if(anim.GetBool("isWalkingForwards"))
+            rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        else if(anim.GetBool("isWalkingBackwards"))
+            rb.MovePosition(rb.position + movement * backwardsSpeed * Time.fixedDeltaTime);
     }
 
     public void SetActive(bool boolean)
