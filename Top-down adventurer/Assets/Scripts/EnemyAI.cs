@@ -7,6 +7,7 @@ public class EnemyAI : MonoBehaviour
     public NavMeshAgent agent;
 
     public Transform player;
+    public Transform LookingAtPlayer;
 
     public LayerMask whatIsGround, whatIsPlayer;
 
@@ -40,17 +41,28 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         player = GameObject.Find("Character").transform;
+        LookingAtPlayer = transform.GetChild(1).transform;
         agent = GetComponent<NavMeshAgent>();
     }
 
     private void Update()
     {
+        LookingAtPlayer.LookAt(player);
         //Check for sight and attack range
         Collider[] hitplayersight  = Physics.OverlapSphere(transform.position, sightRange, whatIsPlayer);
         Collider[] hitplayerattack = Physics.OverlapSphere(transform.position, attackRange, whatIsPlayer);
 
-        playerInSightRange = hitplayersight.Length > 0;
-        playerInAttackRange = hitplayerattack.Length > 0;
+        //test if there's an obstacle in front of the enemy
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, LookingAtPlayer.transform.forward, out hit, sightRange))
+        {
+            playerInSightRange = hitplayersight.Length > 0 && hit.transform.tag != "Obstacle";
+            playerInAttackRange = hitplayerattack.Length > 0 && hit.transform.tag != "Obstacle";
+        } else
+        {
+            playerInSightRange = hitplayersight.Length > 0;
+            playerInAttackRange = hitplayerattack.Length > 0;
+        }
 
         if (isAlive)
         {
