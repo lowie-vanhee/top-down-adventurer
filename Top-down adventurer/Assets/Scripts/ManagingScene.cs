@@ -13,7 +13,7 @@ public class ManagingScene : MonoBehaviour
 
     public void playGame()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("Level01");
     }
 
     public void Retry()

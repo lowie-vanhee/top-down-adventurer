@@ -7,21 +7,22 @@ public class DeathMenu : MonoBehaviour
     CharacterMovement cm;
     Attacks att;
     public GameObject character;
+    public GameObject Deathmenu;
 
     public void SetActive(bool boolean)
     {
-        gameObject.SetActive(boolean);
+        Deathmenu.SetActive(boolean);
         if (boolean)
             Time.timeScale = 0;
         else
             Time.timeScale = 1;
-        cm.SetActive(true);
-        att.SetActive(true);
+        cm.SetActive(!boolean);
+        att.SetActive(!boolean);
     }
 
     public bool IsActive()
     {
-        return gameObject.activeSelf && Time.timeScale == 0;
+        return Deathmenu.activeSelf && Time.timeScale == 0;
     }
 
     private void Start()

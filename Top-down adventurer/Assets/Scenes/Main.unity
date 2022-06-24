@@ -566,17 +566,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2664163075074656017, guid: 167cce51a84b09e4fbf0529d2d7d15ff, type: 3}
   m_PrefabInstance: {fileID: 2664163075341706846}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &821944657 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2664163075074656015, guid: 167cce51a84b09e4fbf0529d2d7d15ff, type: 3}
-  m_PrefabInstance: {fileID: 2664163075341706846}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 821944655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca47ce267ab94394e84583a782f5d6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,17 +1019,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c99708b4953b56b428dc168e56327f5e, type: 3}
---- !u!114 &1889317903 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2664163076154643025, guid: 167cce51a84b09e4fbf0529d2d7d15ff, type: 3}
-  m_PrefabInstance: {fileID: 2664163075341706846}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c018ef3d9d36754b9202185ddd34fd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1889665893 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2664163076153435451, guid: 167cce51a84b09e4fbf0529d2d7d15ff, type: 3}
@@ -1528,7 +1506,7 @@ PrefabInstance:
     - target: {fileID: 8222684930011475968, guid: 63762a8a0f466794f89abe1da245c39c, type: 3}
       propertyPath: deathMenu
       value: 
-      objectReference: {fileID: 1889317903}
+      objectReference: {fileID: 0}
     - target: {fileID: 8222684930011475968, guid: 63762a8a0f466794f89abe1da245c39c, type: 3}
       propertyPath: healthBar
       value: 
@@ -1592,7 +1570,7 @@ PrefabInstance:
     - target: {fileID: 8222684930011475974, guid: 63762a8a0f466794f89abe1da245c39c, type: 3}
       propertyPath: escapemenu
       value: 
-      objectReference: {fileID: 821944657}
+      objectReference: {fileID: 0}
     - target: {fileID: 8222684930011475974, guid: 63762a8a0f466794f89abe1da245c39c, type: 3}
       propertyPath: optionsmenu
       value: 

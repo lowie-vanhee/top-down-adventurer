@@ -7,11 +7,12 @@ public class EscapeMenu : MonoBehaviour
     CharacterMovement cm;
     Attacks att;
     public GameObject character;
+    public GameObject Escapemenu;
     public GameObject optionsmenu;
 
     public void SetActive(bool boolean)
     {
-        gameObject.SetActive(boolean);
+        Escapemenu.SetActive(boolean);
         if (boolean)
             Time.timeScale = 0;
         else
@@ -22,7 +23,7 @@ public class EscapeMenu : MonoBehaviour
 
     public bool IsActive()
     {
-        return gameObject.activeSelf && Time.timeScale == 0;
+        return Escapemenu.activeSelf && Time.timeScale == 0;
     }
 
     private void Start()
